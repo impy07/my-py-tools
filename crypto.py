@@ -3,18 +3,26 @@ from ast import literal_eval
 
 def ASCII (msg :str, mode: int):
 	out = ''
-	if mode:		# Decrypt
+	if mode:		# Decode
 		msg = literal_eval(msg)
 		for entry in msg:
 			out = f'{out}{chr(int(entry))}'
 		
-	else:		# Encrypt
+	else:		# Encode
 		out = []
 		for entry in msg:
 			out.append(ord(entry))
 	return out
 	
-def HEX (mode:int):
+	
+def HEX (msg: str, mode:int):
+	out = ''
+	if mode:		# Decode
+		out = bytes.fromhex(msg)
+	else:		# Encode
+		out = msg.encode('utf-8')
+		out = out.hex()
+	return out
 	
 	
 def main():
@@ -49,6 +57,8 @@ def main():
 		match chose:
 			case '1':
 				out = ASCII(in_str,ENCDEC)
+			case '2':
+				out = HEX(in_str,ENCDEC)
 			case other:
 				continue
 		
